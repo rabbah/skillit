@@ -8,6 +8,7 @@ tags:
   - slack
   - mastra
   - anthropic
+  - web-search
 authors:
   - name: Rodric Rabbah
     account: rabbah
@@ -20,12 +21,14 @@ capabilities:
   - Posts scheduled run output to an admin-configured Slack channel via the platform Slack adapter
   - Persists each schedule's last run to Redis and surfaces it inline in the admin UI
   - Sweeps stale cron-fired conversations from Mastra memory hourly with a 24h TTL
+  - Optionally exposes a web_search tool (powered by Tavily) for skills that need live web results
 repository: github:rabbah/skillit
 integrations:
   - Anthropic
   - Redis
   - Slack
   - Mastra
+  - Tavily (optional)
 ---
 
 ## Overview
@@ -81,12 +84,23 @@ For each skill, click **Schedule** in the admin UI and provide:
 The most recent run for each schedule is shown inline (timestamp, duration,
 output or error). Use the **Run now** button to fire a schedule on demand.
 
+### Web search
+
+Skills can use the `web_search` tool to fetch live results from the web via
+[Tavily](https://app.tavily.com). The tool is only available when
+`TAVILY_API_KEY` is set — if it is not configured, the tool is silently
+omitted and skills that reference it will fall back to the model's training
+data.
+
+To enable it, set `TAVILY_API_KEY` while deploying the agent blueprint.
+
 ### Inputs
 
 | Input | Required | Description |
 |---|---|---|
 | `ADMIN_PASSWORD` | yes | Password gating the `/admin` upload UI |
 | `SESSION_SECRET` | yes | HMAC secret used to sign admin session cookies |
+| `TAVILY_API_KEY` | no | Tavily API key for web search; if omitted, `web_search` is disabled |
 
 ## Limitations
 

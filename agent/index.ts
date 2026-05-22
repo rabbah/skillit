@@ -22,6 +22,7 @@ import { OtelExporter } from '@mastra/otel-exporter';
 import { MastraAdapter } from '@astropods/adapter-mastra';
 import { serve } from '@astropods/adapter-core';
 import { initSkillsCache, renderInstructions, runSkillTool } from './skills';
+import { init as initWebSearch, webSearchTool } from './web-search';
 import { putSkill, listSkills } from './redis';
 import { SlashDispatchAdapter } from './dispatch';
 import { startFrontend } from './frontend';
@@ -81,7 +82,7 @@ const agent = new Agent({
   instructions: () => renderInstructions(),
   model: 'anthropic/claude-sonnet-4-5',
   memory,
-  tools: { run_skill: runSkillTool },
+  tools: { run_skill: runSkillTool, ...(initWebSearch() ? { web_search: webSearchTool } : {}) },
   defaultOptions: {
     tracingOptions: {
       tags: ['astro', 'agent:skillit'],

@@ -90,8 +90,7 @@ export const runSkillTool = createTool({
     skill_name: z.string().describe('Exact name of the skill to load (case-sensitive, no extension).'),
     prompt: z.string().optional().describe('Optional paraphrase of the user request, for logging/tracing.'),
   }),
-  execute: async ({ context }) => {
-    const { skill_name } = context;
+  execute: async ({ skill_name }) => {
     const content = getCached(skill_name);
     if (!content) {
       const available = activeSkills().map((s) => s.name).join(', ') || '(none)';
