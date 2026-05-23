@@ -1,7 +1,10 @@
 # skillit
 
-Generic dispatcher agent. Drop markdown skill files into the admin UI; each one
-becomes a callable skill that the agent will route prompts to.
+_"A claw for your skills."_ 
+
+Drop markdown skill files into the admin UI and each one becomes a callable skill that the agent will route prompts to.
+
+[![Deploy to Astro AI](https://github.com/astropods/agents/blob/main/assets/deploy-button.svg)](https://astropods.com/rabbah/skillit)
 
 ## Quick start
 
