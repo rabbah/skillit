@@ -22,7 +22,7 @@ agent:
     - name: TAVILY_API_KEY
       datatype: string
       secret: true
-      required: false
+      optional: true
       description: Tavily API key for web search (get one at app.tavily.com). If not set, the web_search tool is disabled.
 
 models:
